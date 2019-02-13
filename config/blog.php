@@ -16,8 +16,8 @@ return [
 
     // Meta
     'meta' => [
-        'keywords' => 'PJ Blog,blog,pigjian,laravel,vuejs',
-        'description' => 'Nothing is impossible in PJ Blog'
+        'keywords' => '顽石--Rock个人博客',
+        'description' => 'Laravel,PHP,Linux,Yii,笔记分享'
     ],
 
     // Social Share
@@ -36,9 +36,9 @@ return [
 
     // Article Page
     'article' => [
-        'title'       => 'Nothing is impossible.',
-        'description' => 'https://pigjian.com',
-        'number'      => 15,
+        'title'       => 'Everything happens for the best.',
+        'description' => '一切都是最好的安排',
+        'number'      => 20,
         'sort'        => 'desc',
         'sortColumn'  => 'published_at',
     ],
@@ -54,15 +54,15 @@ return [
     'footer' => [
         'github' => [
             'open' => true,
-            'url'  => 'https://github.com/jcc',
+            'url'  => 'https://github.com/c-rock-y',
         ],
         'twitter' => [
             'open' => true,
-            'url'  => 'https://twitter.com/pigjian'
+            'url'  => 'https://twitter.com//c-rock-y'
         ],
-        'meta' => '© PJ Blog 2016. Powered By Jiajian Chan',
+        'meta' => '© ROCK Blog 2016. Powered By Jiajian Chan',
     ],
 
-    'license' => 'Powered By Jiajian Chan.<br/>This article is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.',
+    'license' => 'Powered By ROCK.<br/>This article is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.',
 
 ];
