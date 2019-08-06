@@ -39,7 +39,7 @@ return [
 
     // Article Page
     'article' => [
-        'title'       => '.',
+        'title'       => '强迫自己形成习惯',
         'description' => 'https://www.crocky.top',
         'number'      => 15,
         'sort'        => 'desc',
