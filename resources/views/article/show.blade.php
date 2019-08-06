@@ -9,7 +9,7 @@
         <h6>{{ $article->subtitle }}</h6>
 
         <div class="header">
-            <i class="fas fa-user"></i>{{ $article->user->name or 'null' }}，
+            <i class="fas fa-user"></i>{{ $article->user->name ?? 'null' }}，
             @if(count($article->tags))
             <i class="fas fa-tags"></i>
                 @foreach($article->tags as $tag)
@@ -46,18 +46,15 @@
         </div>
     </div>
 
-    @if(Auth::guest())
-        <comment title="评论"
-                 commentable-type="articles"
-                 commentable-id="{{ $article->id }}"></comment>
-    @else
-        <comment title="评论"
-                 username="{{ Auth::user()->name }}"
-                 user-avatar="{{ Auth::user()->avatar }}"
-                 commentable-type="articles"
-                 commentable-id="{{ $article->id }}"
-                 can-comment></comment>
-    @endif
+	<comment title="Comments"
+	commentable-type="articles"
+	commentable-id="{{ $article->id }}"
+	@can('comment',$article)
+	username="{{ Auth::user()->name }}"
+	user-avatar="{{ Auth::user()->avatar }}"
+	can-comment
+	@endcan
+	></comment>
 
 @endsection
 

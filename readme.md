@@ -9,9 +9,6 @@
 <p align="center">
   <b>Special thanks to the generous sponsorship by:</b>
   <br><br>
-  <a href="https://www.yousails.com">
-    <img src="https://yousails.com/banners/brand.png" width=350>
-  </a><br/>
   <a href="https://www.upyun.com">
     <img src="https://pigjian.com/storage/logo/upyun.png" width=300>
   </a>
@@ -39,6 +36,7 @@ Here is [documents](https://manual.pigjian.com/)
 - Own comments system
 - Multi-language switching
 - Markdown Editor
+- Roles & Permissions
 - and more...
 
 [PJ Blog](https://github.com/jcc/blog) Laravel 5.*
@@ -55,9 +53,9 @@ Here is [documents](https://manual.pigjian.com/)
 
 ## Preview
 
-![New Blog](https://pigjian.com/uploads/post_img/2016-12-27/newblog1.jpeg)
+![New Blog](https://pig-storage.b0.upaiyun.com/cover/2018/09/07/d2T4cAjTagf5L1rXH1FjLsFkJVffsPIGPkHEl2A5.jpg)
 
-![New Blog](https://pigjian.com/uploads/post_img/2016-12-27/newblog2.jpeg)
+![New Blog](https://pig-storage.b0.upaiyun.com/cover/2018/09/07/4b7ExtB6NHZVh8n5KnW2673Ej6gwtLm1SUAubtpa.jpg)
 
 ## Install
 

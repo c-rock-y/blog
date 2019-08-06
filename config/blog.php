@@ -5,6 +5,9 @@ return [
     // Mail Notification
     'mail_notification' => env('MAIL_NOTIFICATION') ?: false,
 
+    // Super Admin
+    'super_admin' => env('APP_SUPER_ADMIN') ?: 1,
+
     // Default Avatar
     'default_avatar' => env('DEFAULT_AVATAR') ?: '/images/default.png',
 
@@ -12,12 +15,12 @@ return [
     'default_icon' => env('DEFAULT_ICON') ?: '/images/favicon.ico',
 
     // Color Theme
-    'color_theme' => 'default-theme',
+    'color_theme' => 'gray-theme',
 
     // Meta
     'meta' => [
-        'keywords' => '顽石--Rock个人博客',
-        'description' => 'Laravel,PHP,Linux,Yii,笔记分享'
+        'keywords' => 'PJ Blog,blog,pigjian,laravel,vuejs',
+        'description' => 'Nothing is impossible in PJ Blog'
     ],
 
     // Social Share
@@ -36,9 +39,9 @@ return [
 
     // Article Page
     'article' => [
-        'title'       => 'Everything happens for the best.',
-        'description' => '一切都是最好的安排',
-        'number'      => 20,
+        'title'       => 'Nothing is impossible.',
+        'description' => 'https://pigjian.com',
+        'number'      => 15,
         'sort'        => 'desc',
         'sortColumn'  => 'published_at',
     ],
@@ -54,15 +57,15 @@ return [
     'footer' => [
         'github' => [
             'open' => true,
-            'url'  => 'https://github.com/c-rock-y',
+            'url'  => 'https://github.com/jcc',
         ],
         'twitter' => [
             'open' => true,
-            'url'  => 'https://twitter.com//c-rock-y'
+            'url'  => 'https://twitter.com/pigjian'
         ],
-        'meta' => '© ROCK Blog 2016. Powered By Jiajian Chan',
+        'meta' => '© PJ Blog 2016. Powered By Jiajian Chan',
     ],
 
-    'license' => 'Powered By ROCK.<br/>This article is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.',
+    'license' => 'Powered By Jiajian Chan.<br/>This article is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.',
 
 ];
