@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Notifications\GotVote;
+use EloquentFilter\Filterable;
 use Jcc\LaravelVote\Vote;
 use App\Traits\FollowTrait;
 use App\Scopes\StatusScope;
@@ -9,10 +11,11 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable, SoftDeletes, FollowTrait, Vote;
+    use HasApiTokens, Notifiable, SoftDeletes, FollowTrait, Vote, HasRoles, Filterable;
 
     /**
      * The attributes that should be mutated to dates.
@@ -27,9 +30,23 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'is_admin', 'avatar', 'password', 'confirm_code',
-        'nickname', 'real_name', 'weibo_name', 'weibo_link', 'email_notify_enabled',
-        'github_id', 'github_name', 'github_url', 'website', 'description', 'status'
+        'name',
+        'email',
+        'is_admin',
+        'avatar',
+        'password',
+        'confirm_code',
+        'nickname',
+        'real_name',
+        'weibo_name',
+        'weibo_link',
+        'email_notify_enabled',
+        'github_id',
+        'github_name',
+        'github_url',
+        'website',
+        'description',
+        'status'
     ];
 
     /**
@@ -38,7 +55,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'confirm_code', 'updated_at', 'deleted_at'
+        'password',
+        'remember_token',
+        'confirm_code',
+        'updated_at',
+        'deleted_at'
     ];
 
     /**
@@ -74,6 +95,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Determine whether user is a super administrator.
+     *
+     * @return int
+     */
+    public function isSuperAdmin()
+    {
+        return ($this->id == config('blog.super_admin')) ? 1 : 0;
+    }
+
+    /**
      * Get the avatar and return the default avatar if the avatar is null.
      *
      * @param string $value
@@ -94,5 +125,32 @@ class User extends Authenticatable
         if (auth()->id() != $this->id && $this->email_notify_enabled == 'yes' && config('blog.mail_notification')) {
             return $this->email;
         }
+    }
+
+    /**
+     * Up vote or down vote item.
+     *
+     * @param  \App\User $user
+     * @param  \Illuminate\Database\Eloquent\Model $target
+     * @param  string $type
+     *
+     * @return boolean
+     */
+    public static function upOrDownVote($user, $target, $type = 'up')
+    {
+        $hasVoted = $user->{'has' . ucfirst($type) . 'Voted'}($target);
+
+        if ($hasVoted) {
+            $user->cancelVote($target);
+            return false;
+        }
+
+        if ($type == 'up') {
+            $target->user->notify(new GotVote($type . '_vote', $user, $target));
+        }
+
+        $user->{$type . 'Vote'}($target);
+
+        return true;
     }
 }

@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Scopes\StatusScope;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Link extends Model
@@ -23,7 +22,10 @@ class Link extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'link', 'image', 'status'
+        'name',
+        'link',
+        'image',
+        'status'
     ];
 
     /**
@@ -36,5 +38,21 @@ class Link extends Model
         parent::boot();
 
         static::addGlobalScope(new StatusScope());
+    }
+
+    /**
+     * checkAuth
+     *
+     * @author Huiwang <905130909@qq.com>
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeCheckAuth($query)
+    {
+        if (auth()->check() && auth()->user()->is_admin) {
+            $query->withoutGlobalScope(StatusScope::class);
+        }
+        return $query;
     }
 }

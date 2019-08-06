@@ -2,57 +2,57 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryRequest;
-use App\Repositories\CategoryRepository;
 
 class CategoryController extends ApiController
 {
-    protected $category;
-
-    public function __construct(CategoryRepository $category)
-    {
-        parent::__construct();
-
-        $this->category = $category;
-    }
-
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function index(Request $request)
     {
-        return $this->response->collection($this->category->pageWithRequest($request));
+        $categories = Category::filter($request->all())->orderBy('created_at', 'desc')->paginate(10);
+
+        return $this->response->collection($categories);
     }
 
     /**
      * Show all of the categories.
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function getList()
     {
-        return $this->response->collection($this->category->all());
+        $categories = Category::all();
+
+        return $this->response->collection($categories);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\CategoryRequest  $request
+     * @param \App\Http\Requests\CategoryRequest $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(CategoryRequest $request)
     {
-        $this->category->store($request->all());
+        $category = new Category();
+        $category->fill($request->all());
+        $category->save();
 
         return $this->response->withNoContent();
     }
 
     /**
-     * Update Discussion Status By Discussion ID
+     * Update Discussion Status By Discussion ID.
      *
      * @param $id
      * @param Request $request
@@ -63,7 +63,12 @@ class CategoryController extends ApiController
     {
         $input = $request->all();
 
-        $this->category->updateColumn($id, $input);
+        $category = Category::findOrFail($id);
+        foreach ($input as $key => $value) {
+            $category->{$key} = $value;
+        }
+
+        $category->save();
 
         return $this->response->withNoContent();
     }
@@ -71,26 +76,31 @@ class CategoryController extends ApiController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function edit($id)
     {
-        return $this->response->item($this->category->getById($id));
+        $category = Category::findOrFail($id);
+
+        return $this->response->item($category);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\CategoryRequest  $request
-     * @param  int  $id
+     * @param \App\Http\Requests\CategoryRequest $request
+     * @param int                                $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(CategoryRequest $request, $id)
     {
-        $this->category->update($id, $request->all());
+        $category = Category::findOrFail($id);
+        $category->fill($request->all());
+        $category->save();
 
         return $this->response->withNoContent();
     }
@@ -98,13 +108,13 @@ class CategoryController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
-        $this->category->destroy($id);
+        Category::destroy($id);
 
         return $this->response->withNoContent();
     }

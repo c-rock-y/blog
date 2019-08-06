@@ -4,12 +4,14 @@ namespace App;
 
 use App\Scopes\StatusScope;
 use App\Tools\Markdowner;
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\BelongsToUser;
+use App\Traits\HasComments;
+use App\Traits\HasTags;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Discussion extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, BelongsToUser, HasComments, HasTags;
 
     /**
      * The attributes that should be mutated to dates.
@@ -44,36 +46,6 @@ class Discussion extends Model
     }
 
     /**
-     * Get the user for the discussion.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Get the comments for the discussion.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function comments()
-    {
-        return $this->morphMany(Comment::class, 'commentable');
-    }
-
-    /**
-     * Get the tags for the discussion.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function tags()
-    {
-        return $this->morphToMany(Tag::class, 'taggable');
-    }
-
-    /**
      * Set the content attribute.
      *
      * @param $value
@@ -88,4 +60,19 @@ class Discussion extends Model
         $this->attributes['content'] = json_encode($data);
     }
 
+    /**
+     * checkAuth
+     *
+     * @author Huiwang <905130909@qq.com>
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeCheckAuth($query)
+    {
+        if (auth()->check() && auth()->user()->is_admin) {
+            $query->withoutGlobalScope(StatusScope::class);
+        }
+        return $query;
+    }
 }

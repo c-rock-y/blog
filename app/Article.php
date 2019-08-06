@@ -4,12 +4,15 @@ namespace App;
 
 use App\Scopes\DraftScope;
 use App\Tools\Markdowner;
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\BelongsToUser;
+use App\Traits\HasComments;
+use App\Traits\HasTags;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Article extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, BelongsToUser, HasComments, HasTags;
 
     /**
      * The attributes that should be mutated to dates.
@@ -39,29 +42,17 @@ class Article extends Model
     ];
 
     protected $casts = [
-        'content'    =>    'array'
+        'content' => 'array',
     ];
 
     /**
      * The "booting" method of the model.
-     *
-     * @return void
      */
     public static function boot()
     {
         parent::boot();
 
         static::addGlobalScope(new DraftScope());
-    }
-
-    /**
-     * Get the user for the blog article.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 
     /**
@@ -72,26 +63,6 @@ class Article extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
-    }
-
-    /**
-     * Get the tags for the blog article.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\morphToMany
-     */
-    public function tags()
-    {
-        return $this->morphToMany(Tag::class, 'taggable');
-    }
-
-    /**
-     * Get the comments for the discussion.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\morphMany
-     */
-    public function comments()
-    {
-        return $this->morphMany(Comment::class, 'commentable');
     }
 
     /**
@@ -108,6 +79,7 @@ class Article extends Model
      * Get the created at attribute.
      *
      * @param $value
+     *
      * @return string
      */
     public function getCreatedAtAttribute($value)
@@ -125,7 +97,7 @@ class Article extends Model
         $this->attributes['title'] = $value;
 
         if (!config('services.youdao.appKey') || !config('services.youdao.appSecret')) {
-            $this->setUniqueSlug($value, str_random(5));
+            $this->setUniqueSlug($value, Str::random(5));
         } else {
             $this->setUniqueSlug(translug($value), '');
         }
@@ -137,11 +109,13 @@ class Article extends Model
      * @param $value
      * @param $extra
      */
-    public function setUniqueSlug($value, $extra) {
-        $slug = str_slug($value.'-'.$extra);
+    public function setUniqueSlug($value, $extra)
+    {
+        $slug = Str::slug($value.'-'.$extra);
 
         if (static::whereSlug($slug)->exists()) {
             $this->setUniqueSlug($slug, (int) $extra + 1);
+
             return;
         }
 
@@ -156,10 +130,26 @@ class Article extends Model
     public function setContentAttribute($value)
     {
         $data = [
-            'raw'  => $value,
-            'html' => (new Markdowner)->convertMarkdownToHtml($value)
+            'raw' => $value,
+            'html' => (new Markdowner())->convertMarkdownToHtml($value),
         ];
 
         $this->attributes['content'] = json_encode($data);
+    }
+
+    /**
+     * checkAuth
+     *
+     * @author Huiwang <905130909@qq.com>
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeCheckAuth($query)
+    {
+        if (auth()->check() && auth()->user()->is_admin) {
+            $query->withoutGlobalScope(DraftScope::class);
+        }
+        return $query;
     }
 }

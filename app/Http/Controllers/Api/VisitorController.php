@@ -2,28 +2,25 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Visitor;
 use Illuminate\Http\Request;
-use App\Repositories\VisitorRepository;
 
 class VisitorController extends ApiController
 {
-    protected $visitor;
-
-    public function __construct(VisitorRepository $visitor)
-    {
-        parent::__construct();
-
-        $this->visitor = $visitor;
-    }
-
     /**
      * Display a listing of the resource.
      *
+     * @author Huiwang <905130909@qq.com>
+     *
+     * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function index(Request $request)
     {
-        return $this->response->collection($this->visitor->pageWithRequest($request));
-    }
+        $vistors = Visitor::filter($request->all())->orderBy('created_at', 'desc')->paginate(10);
 
+        return $this->response->collection($vistors);
+    }
 }
