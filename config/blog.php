@@ -20,7 +20,7 @@ return [
     // Meta
     'meta' => [
         'keywords' => 'ROCK Blog, php, ElasticSearch, blog, laravel, vuejs',
-        'description' => '坚持你所相信的.'
+        'description' => '不管路走了多远，错了就要重新返回'
     ],
 
     // Social Share
@@ -39,7 +39,7 @@ return [
 
     // Article Page
     'article' => [
-        'title'       => '强迫自己形成习惯',
+        'title'       => '不管路走了多远，错了就要重新返回',
         'description' => 'https://www.crocky.top',
         'number'      => 15,
         'sort'        => 'desc',
