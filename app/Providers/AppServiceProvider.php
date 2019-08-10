@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Article;
 use App\Discussion;
 use App\Tools\FileManager\BaseManager;
+use App\Tools\FileManager\QiNiuManager;
 use App\Tools\FileManager\UpyunManager;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Schema;
@@ -43,7 +44,9 @@ class AppServiceProvider extends ServiceProvider
             if ($config == 'upyun') {
                 return new UpyunManager();
             }
-
+            if ($config == 'qiniu') {
+                return new QiNiuManager();
+            }
             return new BaseManager();
         });
     }

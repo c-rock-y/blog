@@ -72,7 +72,13 @@ return [
             'domain'        => env('UPYUN_DOMAIN'),
             'protocol'      => env('UPYUN_PROTOCOL'),
         ],
-
+        'qiniu' => [
+            'driver'     => 'qiniu',
+            'access_key' => env('QINIU_ACCESS_KEY', 'xxxxxxxxxxxxxxxx'),
+            'secret_key' => env('QINIU_SECRET_KEY', 'xxxxxxxxxxxxxxxx'),
+            'bucket'     => env('QINIU_BUCKET', 'rock'),
+            'domain'     => env('QINIU_DOMAIN', 'http://data.crocky.top'), // or host: https://xxxx.clouddn.com
+        ],
     ],
 
 ];
