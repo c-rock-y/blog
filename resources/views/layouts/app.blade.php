@@ -61,5 +61,16 @@
         ga('send', 'pageview');
     </script>
     @endif
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?344750d3aeec0d0683a6cd085bac7b78";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
 </body>
 </html>
