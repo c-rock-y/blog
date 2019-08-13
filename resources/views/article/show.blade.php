@@ -4,7 +4,7 @@
 
 @section('content')
     @component('particals.jumbotron')
-        <h4>{{ $article->title }}</h4>
+        <h2>{{ $article->title }}</h2>
 
         <h6>{{ $article->subtitle }}</h6>
 
