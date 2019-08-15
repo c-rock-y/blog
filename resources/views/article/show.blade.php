@@ -4,9 +4,9 @@
 
 @section('content')
     @component('particals.jumbotron')
-        <h2>{{ $article->title }}</h2>
+        <h1>{{ $article->title }}</h1>
 
-        <h6>{{ $article->subtitle }}</h6>
+        <h4>{{ $article->subtitle }}</h4>
 
         <div class="header">
             <i class="fas fa-user"></i>{{ $article->user->name ?? 'null' }}，
