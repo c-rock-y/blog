@@ -110,21 +110,22 @@ class UserController extends ApiController
 
     /**
      * Crop Avatar.
-     *
+     * @TODO:无法重新上传到七牛
      * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function cropAvatar(Request $request)
     {
+
         $currentImage = $request->get('image');
         $data = $request->get('data');
 
-        $image = Image::make($currentImage['relative_url']);
+        $image = Image::make($currentImage['url']);
 
-        $image->crop((int) $data['width'], (int) $data['height'], (int) $data['x'], (int) $data['y']);
+       // $image->crop((int) $data['width'], (int) $data['height'], (int) $data['x'], (int) $data['y']);
 
-        $image->save($currentImage['relative_url']);
+        //$image->save($currentImage['relative_url']);
 
         auth()->user()->update(['avatar' => $currentImage['url']]);
 
