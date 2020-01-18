@@ -27,7 +27,7 @@ class CategoryController extends Controller
      */
     public function show($category)
     {
-        $category = Category::query()->where('name', $category)->first();
+        $category = Category::query()->where('path', $category)->first();
 
         if (!$category) {
             abort(404);

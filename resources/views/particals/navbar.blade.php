@@ -12,6 +12,9 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">{{ lang('Articles') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('category', ['elastic']) }}">{{ lang('CategoryElastic') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('category', ['mysql']) }}">{{ lang('CategoryMysql') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('category', ['designPatterns']) }}">{{ lang('CategoryDesignPatterns') }}</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('discussion') }}">{{ lang('Discussions') }}</a></li>
             </ul>
 
