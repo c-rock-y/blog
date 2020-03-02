@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -29,48 +29,71 @@
     @yield('styles')
 </head>
 <body>
-    <div id="app">
-        @include('particals.navbar')
+<div id="app">
+    @include('particals.navbar')
 
-        <div class="main">
-            @yield('content')
-        </div>
-
-        @include('particals.footer')
+    <div class="main">
+        @yield('content')
     </div>
 
-    <!-- Scripts -->
-    <script src="{{ mix('js/home.js') }}"></script>
+    @include('particals.footer')
+</div>
 
-    @yield('scripts')
+<!-- Scripts -->
+<script src="{{ mix('js/home.js') }}"></script>
 
+@yield('scripts')
+
+<script>
+    $(function () {
+        $("[data-toggle='tooltip']").tooltip();
+    });
+</script>
+
+@if(config('blog.google.open'))
     <script>
-        $(function () {
-            $("[data-toggle='tooltip']").tooltip();
-        });
-    </script>
-
-    @if(config('blog.google.open'))
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
         ga('create', '{{ config('blog.google.id') }}', 'auto');
         ga('send', 'pageview');
     </script>
-    @endif
+@endif
 
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?344750d3aeec0d0683a6cd085bac7b78";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
+<script>
+    //baidu 统计
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?293cc3cc9d70a71abc90fc68c473d2f0";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script>
+    //百度链接自动提交
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
 
 </body>
 </html>
