@@ -40,7 +40,7 @@
 </div>
 
 <!-- Scripts -->
-<script src="{{ config('blog.cdn_url')  }}  {{ mix('js/home.js') }}"></script>
+<script src="{{ config('blog.cdn_url')  }}{{ mix('js/home.js') }}"></script>
 
 @yield('scripts')
 
