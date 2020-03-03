@@ -14,8 +14,8 @@
 
     <title>@yield('title', config('app.name'))</title>
 
-    <link rel="stylesheet" href="{{ mix('css/home.css', 'https://static.crocky.top') }}">
-    <link rel="stylesheet" href="{{ mix('css/themes/' . config('blog.color_theme') . '.css', 'https://static.crocky.top') }}">
+    <link rel="stylesheet" href="{{ config('app.name')  }} {{ mix('css/home.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/themes/' . config('blog.color_theme') . '.css') }}">
 
     <!-- Scripts -->
     <script>
@@ -40,7 +40,7 @@
 </div>
 
 <!-- Scripts -->
-<script src="{{ mix('js/home.js', 'https://static.crocky.top') }}"></script>
+<script src="{{ mix('js/home.js') }}"></script>
 
 @yield('scripts')
 
