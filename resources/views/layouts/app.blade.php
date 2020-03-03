@@ -15,7 +15,7 @@
     <title>@yield('title', config('app.name'))</title>
 
     <link rel="stylesheet" href="{{ config('blog.cdn_url')  }} {{ mix('css/home.css') }}">
-    <link rel="stylesheet" href="{{ mix('css/themes/' . config('blog.color_theme') . '.css') }}">
+    <link rel="stylesheet" href="{{ config('blog.cdn_url')  }}  {{ mix('css/themes/' . config('blog.color_theme') . '.css') }}">
 
     <!-- Scripts -->
     <script>
@@ -40,7 +40,7 @@
 </div>
 
 <!-- Scripts -->
-<script src="{{ mix('js/home.js') }}"></script>
+<script src="{{ config('blog.cdn_url')  }}  {{ mix('js/home.js') }}"></script>
 
 @yield('scripts')
 
