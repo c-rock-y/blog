@@ -73,4 +73,5 @@ return [
 
     'license' => 'Powered By Rock .<br/>This article is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.',
 
+    'cdn_url' => env('CDN_URL', 'https://static.crocky.top/'),
 ];
